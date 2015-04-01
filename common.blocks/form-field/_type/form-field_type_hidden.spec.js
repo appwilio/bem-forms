@@ -1,7 +1,9 @@
-modules.define('spec', ['i-bem__dom', 'BEMHTML', 'jquery', 'form-field'], function(provide, bemdom, bemhtml, $) {
+modules.define('spec',
+    ['i-bem__dom', 'BEMHTML', 'jquery', 'form-field'],
+    function(provide, BEMDOM, BEMHTML, $) {
 
     function buildBlock(name, bemjson) {
-        return bemdom.init($(bemhtml.apply(bemjson)).appendTo('body')).bem(name);
+        return BEMDOM.init($(BEMHTML.apply(bemjson)).appendTo('body')).bem(name);
     }
 
     describe('form-field_type_hidden', function() {
@@ -18,7 +20,7 @@ modules.define('spec', ['i-bem__dom', 'BEMHTML', 'jquery', 'form-field'], functi
         });
 
         afterEach(function() {
-            bemdom.destruct(block.domElem);
+            BEMDOM.destruct(block.domElem);
         });
 
         it('should return value on getVal', function() {

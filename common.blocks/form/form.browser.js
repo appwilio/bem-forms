@@ -2,8 +2,8 @@
  * @module form
  */
 modules.define('form',
-    ['i-bem__dom', 'objects'],
-    function(provide, BEMDOM, objects) {
+    ['i-bem__dom', 'objects', 'form-field__slugify'],
+    function(provide, BEMDOM, objects, slugify) {
 
 /**
  * Form declaration
@@ -25,14 +25,25 @@ provide(BEMDOM.decl(this.name, /** @lends form.prototype */{
 
     /**
      * Returns all fields inside form
-     * @type {FormField[]}
+     *
+     * @returns {FormField[]}
      */
     getFields : function() {
         return this.findBlocksInside('form-field');
     },
 
     /**
+     * Returns field by name
+     *
+     * @returns {FormField[]}
+     */
+    getFieldsByName : function(name) {
+        return this.findBlocksInside({ block : 'form-field', modName : 'name', modVal : slugify(name) });
+    },
+
+    /**
      * Returns serialized form data
+     *
      * @returns {Object}
      */
     getVal : function() {
@@ -45,6 +56,7 @@ provide(BEMDOM.decl(this.name, /** @lends form.prototype */{
 
     /**
      * Fills form fields with passed data
+     *
      * @param {Object} [val] - data (params.fillData by default)
      */
     setVal : function(val) {
@@ -64,6 +76,7 @@ provide(BEMDOM.decl(this.name, /** @lends form.prototype */{
 
     /**
      * Field change event handler
+     *
      * @abstract
      * @private
      * @param {FormField} field
@@ -83,6 +96,7 @@ provide(BEMDOM.decl(this.name, /** @lends form.prototype */{
 
     /**
      * Field focus event handler
+     *
      * @abstract
      * @private
      * @param {FormField} field
@@ -95,6 +109,7 @@ provide(BEMDOM.decl(this.name, /** @lends form.prototype */{
 
     /**
      * Field blur event handler
+     *
      * @abstract
      * @private
      * @param {FormField} field
@@ -104,6 +119,7 @@ provide(BEMDOM.decl(this.name, /** @lends form.prototype */{
     _onFieldBlur : function() {
         // dummy
     }
+
 }, /** @lends form */{
     live : function () {
         this

@@ -2,20 +2,27 @@
  * @module form-field
  */
 modules.define('form-field',
-    ['i-bem__dom'],
-    function(provide, BEMDOM) {
+    ['i-bem__dom', 'form-field__slugify'],
+    function(provide, BEMDOM, slugify) {
 
 /**
  * Field block
  */
 provide(BEMDOM.decl(this.name, /** @lends form-field.prototype */{
+    onSetMod : {
+        'js' : {
+            'inited' : function() {
+                this.setMod('name', slugify(this.getName()));
+            }
+        }
+    },
+
     /**
      * Returns field name
      * @returns {String}
      * @abstract
      */
     getName : function() {
-        return '';
     },
 
     /**
